@@ -25,8 +25,6 @@ Output: Edit distance table
 
 int getMinimumPenalty(string x, string y, int pxy, int pgap)
 {
-    int i, j; // intialising variables
-
     int m = x.length(); //Mangal length of gene1
     int n = y.length(); // length of gene2
 
@@ -40,11 +38,11 @@ int getMinimumPenalty(string x, string y, int pxy, int pgap)
         dp[0][j] = j * pgap;
 
     // calcuting the minimum penalty
-    for (i = 1; i <= m; i++)
+    for (int i = 1; i <= m; i++)
     {
-        for (j = 1; j <= n; j++)
+        for (int j = 1; j <= n; j++)
         {
-            if (x[i - 1] == y[j - 1])
+            if (x[i - 1] == y[j - 1]) // when equal
             {
                 dp[i][j] = dp[i - 1][j - 1];
             }
@@ -114,8 +112,8 @@ int main()
 {
     string a, b;
     //cin >> a >> b;
-    a = "abccbaa";
-    b = "aabcbaa";
+    a = "I am after aditi";
+    b = "I am after adarsh";
     int n = a.length();
     int m = b.length();
     int dist = levenshtien(a, b);
@@ -127,7 +125,7 @@ int main()
         sum -= (pos[i] - 1);
         cout << pos[i] << endl;
     }
-    cout << "Percentage match : " << (1 - ((float)dist) / (float)max(m, n)) * 100 << endl;
-    cout << "Percentage match : " << (1 - (float)sum / ((float)n * ((float)n + 1) / 2)) * 100 << endl;
-    cout << "Percentage match : " << (1 - ((float)dist * (float)pen) / ((float)max(m, n) * (float)max(m, n) * 2)) * 100 << endl;
+    cout << "Percentage match (normal Levi) : " << (1 - ((float)dist) / (float)max(m, n)) * 100 << endl;
+    cout << "Percentage match (backtrack): " << (1 - (float)sum / ((float)n * ((float)n + 1) / 2)) * 100 << endl;
+    cout << "Percentage match (scoring algo): " << (1 - ((float)dist * (float)pen) / ((float)max(m, n) * (float)max(m, n) * 2)) * 100 << endl;
 }
