@@ -4,29 +4,10 @@ using namespace std;
 int d[100][100];
 int MI[100][100];
 
-/*
-Input: Sequences: A, B, and character set Σ
-Output: Edit distance table
-1 u ← Σ.length
-2 m ← A.length
-3 n ← B.length
-4 Let MI[0...u − 1, 0...n − 1] and ED[0...m, 0...n] be new tables
-5 for i = 0 to u − 1 (Compute all iterations of i in parallel) do
-6 for j = 0 to n − 1 do
-7 Compute MIi,j according to Equation (2)
-8 end
-9 end
-10 for i = 0 to m do
-11 for j = 0 to n (Compute all iterations of j in parallel) do
-12 Compute EDTi,j according to Equation (3)
-13 end
-14 end
-*/
-
 int getMinimumPenalty(string x, string y, int pxy, int pgap)
 {
-    int m = x.length(); //Mangal length of gene1
-    int n = y.length(); // length of gene2
+    int m = x.length(); //length of 1
+    int n = y.length(); // length of 2
 
     // table for storing optimal substructure answers
     int dp[m + 1][n + 1] = {0};
@@ -113,14 +94,14 @@ int main()
 {
     string a, b;
     //cin >> a >> b;
-    a = "riverm";
-    b = "roverm";
+    a = "ATGGCCTC";
+    b = "ACGGCTC";
 
     int n = a.length();
     int m = b.length();
     int dist = levenshtien(a, b);
     //int pen = getMinimumPenalty(a, b, max(m, n), dist);
-    int penT = getMinimumPenalty(a, b, 10, 5);
+    int penT = getMinimumPenalty(a, b, 1, 1);
     vector<int> pos = backtrack(a, b);
     int sum = n * pos.size();
     for (int i = 0; i < pos.size(); i++)
@@ -133,7 +114,7 @@ int main()
          << b << endl;
     cout << "Percentage match (normal Levi) : " << (1 - ((float)dist) / (float)max(m, n)) * 100 << endl;
     cout << "Percentage match (backtrack): " << (1 - (float)sum / ((float)n * ((float)n + 1) / 2)) * 100 << endl;
-    cout << "Percentage match (scoring algo t 5): " << (1 - ((float)penT / ((float)max(m, n) * 10))) * 100 << endl;
+    cout << "Percentage match (scoring algo t 5): " << (1 - ((float)penT / ((float)min(m, n)))) * 100 << endl;
     //cout << "Percentage match (scoring algo): " << (1 - ((float)dist / (float)max(m, n)) - ((float)pen / ((float)max(m, n) * (float)max(m, n)))) * 100 << endl;
     return 0;
 }
