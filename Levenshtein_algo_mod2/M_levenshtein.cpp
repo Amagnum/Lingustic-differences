@@ -32,9 +32,9 @@ int getMinimumPenalty(string x, string y, int pxy, int pgap)
     int dp[m + 1][n + 1] = {0};
 
     // intialising the table
-    for (int i = 0; i <= n; i++)
+    for (int i = 0; i <= n + 1; i++)
         dp[i][0] = i * pgap;
-    for (int j = 0; j <= m; j++)
+    for (int j = 0; j <= m + 1; j++)
         dp[0][j] = j * pgap;
 
     // calcuting the minimum penalty
@@ -54,7 +54,8 @@ int getMinimumPenalty(string x, string y, int pxy, int pgap)
             }
         }
     }
-    cout << "Minimum Penalty in aligning the genes = ";
+
+    cout << "Minimum Penalty in aligning the strings = ";
     cout << dp[m][n] << "\n";
     return dp[m][n];
 }
@@ -112,20 +113,27 @@ int main()
 {
     string a, b;
     //cin >> a >> b;
-    a = "I am after aditi";
-    b = "I am after adarsh";
+    a = "I am sentence one for opps but not me";
+    b = "z am sentence for one opps but not";
+
     int n = a.length();
     int m = b.length();
     int dist = levenshtien(a, b);
-    int pen = getMinimumPenalty(a, b, max(m, n), dist);
+    //int pen = getMinimumPenalty(a, b, max(m, n), dist);
+    int penT = getMinimumPenalty(a, b, 10, 5);
     vector<int> pos = backtrack(a, b);
     int sum = n * pos.size();
     for (int i = 0; i < pos.size(); i++)
     {
         sum -= (pos[i] - 1);
-        cout << pos[i] << endl;
+        //cout << pos[i] << endl;
     }
+    cout << "\n\n"
+         << a << " \n"
+         << b << endl;
     cout << "Percentage match (normal Levi) : " << (1 - ((float)dist) / (float)max(m, n)) * 100 << endl;
     cout << "Percentage match (backtrack): " << (1 - (float)sum / ((float)n * ((float)n + 1) / 2)) * 100 << endl;
-    cout << "Percentage match (scoring algo): " << (1 - ((float)dist * (float)pen) / ((float)max(m, n) * (float)max(m, n) * 2)) * 100 << endl;
+    cout << "Percentage match (scoring algo t 5): " << (1 - ((float)dist / (float)max(m, n)) - ((float)penT / ((float)max(m, n) * 10))) * 100 << endl;
+    //cout << "Percentage match (scoring algo): " << (1 - ((float)dist / (float)max(m, n)) - ((float)pen / ((float)max(m, n) * (float)max(m, n)))) * 100 << endl;
+    return 0;
 }
