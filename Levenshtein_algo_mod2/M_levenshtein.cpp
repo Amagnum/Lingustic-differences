@@ -9,7 +9,7 @@ int getMinimumPenalty(string x, string y, int pxy, int pgap)
     int m = x.length(); //length of 1
     int n = y.length(); // length of 2
 
-    // table for storing optimal substructure answers
+    //storing optimal substructure answers
     int dp[m + 1][n + 1] = {0};
 
     // intialising the table
@@ -29,15 +29,13 @@ int getMinimumPenalty(string x, string y, int pxy, int pgap)
             }
             else
             {
-                dp[i][j] = min({dp[i - 1][j - 1] + pxy,
-                                dp[i - 1][j] + pgap,
-                                dp[i][j - 1] + pgap});
+                dp[i][j] = min({dp[i - 1][j - 1] + pxy, //Replace penelty
+                                dp[i - 1][j] + pgap,    //Gap penelty
+                                dp[i][j - 1] + pgap});  //gap penelty
             }
         }
     }
 
-    cout << "Minimum Penalty in aligning the strings = ";
-    cout << dp[m][n] << "\n";
     return dp[m][n];
 }
 
@@ -56,65 +54,54 @@ int levenshtien(string a, string b)
                 min(d[i - 1][j - 1] + ((a[i - 1] == b[j - 1]) ? 0 : 1), min(d[i - 1][j], d[i][j - 1]) + 1);
         }
     }
-    cout << "Lev t = ";
-    cout << d[n][m] << "\n";
     return d[n][m];
 }
 
-vector<int> backtrack(string a, string b)
+void CompareString(string *s1, string *s2)
 {
-    vector<int> pos;
-    int n = a.length(), m = b.length();
-    for (int i = n; i > 0;)
+    string a;
+    string b;
+    int n = s1->length();
+    int m = s2->length();
+    if (m > n)
     {
-        for (int j = m; j > 0;)
-        {
-            if (d[i - 1][j] + 1 == d[i][j])
-            {
-                pos.push_back(i);
-                i--;
-            }
-            else if (d[i - 1][j - 1] + ((a[i - 1] == b[j - 1]) ? 0 : 1) == d[i][j])
-            {
-                if (a[i - 1] != b[j - 1])
-                    pos.push_back(i);
-                i--;
-                j--;
-            }
-            else
-            {
-                j--;
-            }
-        }
+        a = *s2;
+        b = *s1;
     }
-    return pos;
+    else
+    {
+        a = *s1;
+        b = *s2;
+    }
+
+    int dist = levenshtien(a, b);
+    int penT = getMinimumPenalty(a, b, 2, 1);
+    cout << "\n"
+         << a << " "
+         << b << "( ";
+    cout << (1 - ((float)dist) / (float)max(m, n)) * 100 << " normal, ";
+    cout << (1 - ((float)penT / ((float)max(m, n) * 2))) * 100 << " mod )" << endl;
 }
 
 int main()
 {
-    string a, b;
-    //cin >> a >> b;
-    a = "ATGGCCTC";
-    b = "ACGGCTC";
-
-    int n = a.length();
-    int m = b.length();
-    int dist = levenshtien(a, b);
-    //int pen = getMinimumPenalty(a, b, max(m, n), dist);
-    int penT = getMinimumPenalty(a, b, 1, 1);
-    vector<int> pos = backtrack(a, b);
-    int sum = n * pos.size();
-    for (int i = 0; i < pos.size(); i++)
+    int nLanguages, nCompare;
+    cin >> nLanguages >> nCompare;
+    string lang[nLanguages];
+    for (size_t i = 0; i < nLanguages; i++)
     {
-        sum -= (pos[i] - 1);
-        //cout << pos[i] << endl;
+        cin >> lang[i];
     }
-    cout << "\n\n"
-         << a << " \n"
-         << b << endl;
-    cout << "Percentage match (normal Levi) : " << (1 - ((float)dist) / (float)max(m, n)) * 100 << endl;
-    cout << "Percentage match (backtrack): " << (1 - (float)sum / ((float)n * ((float)n + 1) / 2)) * 100 << endl;
-    cout << "Percentage match (scoring algo t 5): " << (1 - ((float)penT / ((float)min(m, n)))) * 100 << endl;
-    //cout << "Percentage match (scoring algo): " << (1 - ((float)dist / (float)max(m, n)) - ((float)pen / ((float)max(m, n) * (float)max(m, n)))) * 100 << endl;
-    return 0;
+
+    for (size_t i = 0; i < nCompare; i++)
+    {
+        string string1;
+        cin >> string1;
+        for (size_t i = 1; i < nLanguages; i++)
+        {
+            string compareWith;
+            cin >> compareWith;
+            CompareString(&string1, &compareWith);
+        }
+    }
 }
