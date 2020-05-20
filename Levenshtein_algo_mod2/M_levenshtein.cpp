@@ -113,8 +113,8 @@ int main()
 {
     string a, b;
     //cin >> a >> b;
-    a = "I am sentence one for opps but not me";
-    b = "z am sentence for one opps but not";
+    a = "riverm";
+    b = "roverm";
 
     int n = a.length();
     int m = b.length();
@@ -133,7 +133,7 @@ int main()
          << b << endl;
     cout << "Percentage match (normal Levi) : " << (1 - ((float)dist) / (float)max(m, n)) * 100 << endl;
     cout << "Percentage match (backtrack): " << (1 - (float)sum / ((float)n * ((float)n + 1) / 2)) * 100 << endl;
-    cout << "Percentage match (scoring algo t 5): " << (1 - ((float)dist / (float)max(m, n)) - ((float)penT / ((float)max(m, n) * 10))) * 100 << endl;
+    cout << "Percentage match (scoring algo t 5): " << (1 - ((float)penT / ((float)max(m, n) * 10))) * 100 << endl;
     //cout << "Percentage match (scoring algo): " << (1 - ((float)dist / (float)max(m, n)) - ((float)pen / ((float)max(m, n) * (float)max(m, n)))) * 100 << endl;
     return 0;
 }
