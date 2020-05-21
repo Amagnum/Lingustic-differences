@@ -13,9 +13,9 @@ int getMinimumPenalty(string x, string y, int pxy, int pgap)
     int dp[m + 1][n + 1] = {0};
 
     // intialising the table
-    for (int i = 0; i <= n + 1; i++)
+    for (int i = 0; i <= n; i++)
         dp[i][0] = i * pgap;
-    for (int j = 0; j <= m + 1; j++)
+    for (int j = 0; j <= m; j++)
         dp[0][j] = j * pgap;
 
     // calcuting the minimum penalty
@@ -23,7 +23,7 @@ int getMinimumPenalty(string x, string y, int pxy, int pgap)
     {
         for (int j = 1; j <= n; j++)
         {
-            if (x[i - 1] == y[j - 1]) // when equal
+            if (x[i - 1] == y[j - 1]) // when equal no penelty
             {
                 dp[i][j] = dp[i - 1][j - 1];
             }
@@ -78,7 +78,7 @@ void CompareString(string *s1, string *s2)
     int penT = getMinimumPenalty(a, b, 2, 1);
     cout << "\n"
          << a << " "
-         << b << "( ";
+         << b << " (";
     cout << (1 - ((float)dist) / (float)max(m, n)) * 100 << " lev,";
     cout << (1 - ((float)penT / ((float)max(m, n) * 2))) * 100 << " mod)" << endl;
 }
