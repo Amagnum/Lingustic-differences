@@ -13,3 +13,6 @@
         Shukravaar Sukravar Shukrobar Shukarvaar Shukkar
         Shanivaar Shanivar Shonibar Shanivaar Sanichar
         Ravivaar Ravivar Robibar Aitvaar Etvaar
+3. To check the output, compile and run the cpp code by giving the text file as input (go to file and).
+   - On ubuntu use
+       >```g++ M_levenshtein.cpp && ./a.out < ../data/misc.txt```

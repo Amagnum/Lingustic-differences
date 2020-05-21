@@ -80,7 +80,7 @@ void CompareString(string *s1, string *s2)
          << a << " "
          << b << " (";
     cout << (1 - ((float)dist) / (float)max(m, n)) * 100 << " lev,";
-    cout << (1 - ((float)penT / ((float)max(m, n) * 2))) * 100 << " mod)" << endl;
+    cout << (1 - (((float)dist) / (float)max(m, n) + ((float)penT / ((float)max(m, n) * 2))) / 2) * 100 << " mod)" << endl;
 }
 
 int main()
